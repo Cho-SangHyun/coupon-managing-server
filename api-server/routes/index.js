@@ -101,4 +101,20 @@ router.post('/cafes', function(req, res){
   );
  });
 
+ /* delete cafe data. */
+router.delete('/cafes/:cafeName', function(req, res) {
+  const cafeName = req.params.cafeName;
+  client.deleteCafe({name: cafeName}, function(err, response) {
+    if (err == null) {
+      if (response?.is_success) {
+        res.sendStatus(204);
+      } else {
+        res.sendStatus(404);
+      }
+    } else {
+      res.sendStatus(500);
+    }
+  });
+});
+
 module.exports = router;

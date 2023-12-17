@@ -17,7 +17,7 @@ class CouponManagerStub(object):
         self.RegisterCafe = channel.unary_unary(
                 '/couponmanage.CouponManager/RegisterCafe',
                 request_serializer=couponmanage__pb2.CafeDetail.SerializeToString,
-                response_deserializer=couponmanage__pb2.CafeRegisterAndUpdateReply.FromString,
+                response_deserializer=couponmanage__pb2.CafeCUDReply.FromString,
                 )
         self.ReceiveAllCafes = channel.unary_unary(
                 '/couponmanage.CouponManager/ReceiveAllCafes',
@@ -26,13 +26,18 @@ class CouponManagerStub(object):
                 )
         self.ReceiveCafeDetail = channel.unary_unary(
                 '/couponmanage.CouponManager/ReceiveCafeDetail',
-                request_serializer=couponmanage__pb2.CafeDetailRequest.SerializeToString,
+                request_serializer=couponmanage__pb2.CafeName.SerializeToString,
                 response_deserializer=couponmanage__pb2.CafeDetail.FromString,
                 )
         self.UpdateCafe = channel.unary_unary(
                 '/couponmanage.CouponManager/UpdateCafe',
                 request_serializer=couponmanage__pb2.CafeUpdateRequest.SerializeToString,
-                response_deserializer=couponmanage__pb2.CafeRegisterAndUpdateReply.FromString,
+                response_deserializer=couponmanage__pb2.CafeCUDReply.FromString,
+                )
+        self.DeleteCafe = channel.unary_unary(
+                '/couponmanage.CouponManager/DeleteCafe',
+                request_serializer=couponmanage__pb2.CafeName.SerializeToString,
+                response_deserializer=couponmanage__pb2.CafeCUDReply.FromString,
                 )
 
 
@@ -63,13 +68,19 @@ class CouponManagerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def DeleteCafe(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_CouponManagerServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'RegisterCafe': grpc.unary_unary_rpc_method_handler(
                     servicer.RegisterCafe,
                     request_deserializer=couponmanage__pb2.CafeDetail.FromString,
-                    response_serializer=couponmanage__pb2.CafeRegisterAndUpdateReply.SerializeToString,
+                    response_serializer=couponmanage__pb2.CafeCUDReply.SerializeToString,
             ),
             'ReceiveAllCafes': grpc.unary_unary_rpc_method_handler(
                     servicer.ReceiveAllCafes,
@@ -78,13 +89,18 @@ def add_CouponManagerServicer_to_server(servicer, server):
             ),
             'ReceiveCafeDetail': grpc.unary_unary_rpc_method_handler(
                     servicer.ReceiveCafeDetail,
-                    request_deserializer=couponmanage__pb2.CafeDetailRequest.FromString,
+                    request_deserializer=couponmanage__pb2.CafeName.FromString,
                     response_serializer=couponmanage__pb2.CafeDetail.SerializeToString,
             ),
             'UpdateCafe': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateCafe,
                     request_deserializer=couponmanage__pb2.CafeUpdateRequest.FromString,
-                    response_serializer=couponmanage__pb2.CafeRegisterAndUpdateReply.SerializeToString,
+                    response_serializer=couponmanage__pb2.CafeCUDReply.SerializeToString,
+            ),
+            'DeleteCafe': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteCafe,
+                    request_deserializer=couponmanage__pb2.CafeName.FromString,
+                    response_serializer=couponmanage__pb2.CafeCUDReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -109,7 +125,7 @@ class CouponManager(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/RegisterCafe',
             couponmanage__pb2.CafeDetail.SerializeToString,
-            couponmanage__pb2.CafeRegisterAndUpdateReply.FromString,
+            couponmanage__pb2.CafeCUDReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -142,7 +158,7 @@ class CouponManager(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/ReceiveCafeDetail',
-            couponmanage__pb2.CafeDetailRequest.SerializeToString,
+            couponmanage__pb2.CafeName.SerializeToString,
             couponmanage__pb2.CafeDetail.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -160,6 +176,23 @@ class CouponManager(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/UpdateCafe',
             couponmanage__pb2.CafeUpdateRequest.SerializeToString,
-            couponmanage__pb2.CafeRegisterAndUpdateReply.FromString,
+            couponmanage__pb2.CafeCUDReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteCafe(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/DeleteCafe',
+            couponmanage__pb2.CafeName.SerializeToString,
+            couponmanage__pb2.CafeCUDReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

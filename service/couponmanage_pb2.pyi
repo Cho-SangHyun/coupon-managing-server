@@ -71,7 +71,7 @@ class AllCafeReply(_message.Message):
     cafes: _containers.RepeatedCompositeFieldContainer[CafeDetail]
     def __init__(self, cafes: _Optional[_Iterable[_Union[CafeDetail, _Mapping]]] = ...) -> None: ...
 
-class CafeDetailRequest(_message.Message):
+class CafeName(_message.Message):
     __slots__ = ("name",)
     NAME_FIELD_NUMBER: _ClassVar[int]
     name: str
@@ -85,7 +85,7 @@ class EmptyReply(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
 
-class CafeRegisterAndUpdateReply(_message.Message):
+class CafeCUDReply(_message.Message):
     __slots__ = ("is_success",)
     IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     is_success: bool
