@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package couponmanage;
+
+service CouponManager {
+  rpc RegisterCafe (CafeRegisterRequest) returns (CafeRegisterReply) {}
+}
+
+enum DayOfTheWeek {
+    SUN = 0;
+    MON = 1;
+    TUE = 2;
+    WED = 3;
+    THU = 4;
+    FRI = 5;
+    SAT = 6;
+}
+
+message OperatingInfo {
+    DayOfTheWeek open_day_of_the_week = 1;
+    string open_hour = 2;
+    DayOfTheWeek close_day_of_the_week = 3;
+    string close_hour = 4;
+}
+
+message CafeRegisterRequest {
+  string name = 1;
+  string address = 2;
+  double rating = 3;
+  repeated OperatingInfo operating_info = 4;
+}
+
+message CafeRegisterReply {
+  bool is_success = 1;
+}
