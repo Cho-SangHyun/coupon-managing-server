@@ -28,6 +28,10 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
         self.cafe_collection = db.cafe_collection
         self.coupon_collection = db.coupon_collection
 
+    def ReceiveAllCafes(self, request, context):
+        data = list(self.cafe_collection.find({}, {"_id":False}))
+        return couponmanage_pb2.AllCafeReply(cafes=data)
+
     def RegisterCafe(self, request, context):
         if self.cafe_collection.find_one({"name": request.name}) is not None:
             return couponmanage_pb2.CafeRegisterReply(is_success=False)

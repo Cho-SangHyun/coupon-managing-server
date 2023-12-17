@@ -47,6 +47,20 @@ class CafeRegisterRequest(_message.Message):
     operating_info: _containers.RepeatedCompositeFieldContainer[OperatingInfo]
     def __init__(self, name: _Optional[str] = ..., address: _Optional[str] = ..., rating: _Optional[float] = ..., operating_info: _Optional[_Iterable[_Union[OperatingInfo, _Mapping]]] = ...) -> None: ...
 
+class AllCafeReply(_message.Message):
+    __slots__ = ("cafes",)
+    CAFES_FIELD_NUMBER: _ClassVar[int]
+    cafes: _containers.RepeatedCompositeFieldContainer[CafeRegisterRequest]
+    def __init__(self, cafes: _Optional[_Iterable[_Union[CafeRegisterRequest, _Mapping]]] = ...) -> None: ...
+
+class EmptyRequest(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class EmptyReply(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
 class CafeRegisterReply(_message.Message):
     __slots__ = ("is_success",)
     IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]

@@ -18,9 +18,16 @@ const routes = protoDescriptor.couponmanage;
 
 let client = new routes.CouponManager('localhost:50051', grpc.credentials.createInsecure());
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+/* receive all cafe data. */
+router.get('/cafes', function(req, res) {
+  client.receiveAllCafes({}, function(err, response) {
+    if (err == null) {
+      let jsonObject = response.cafes.toObject();
+      res.status(200).json(JSON.stringify(response));
+    } else {
+      res.sendStatus(500);
+    }
+  });
 });
 
 /* Insert new cafe data */

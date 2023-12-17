@@ -19,12 +19,23 @@ class CouponManagerStub(object):
                 request_serializer=couponmanage__pb2.CafeRegisterRequest.SerializeToString,
                 response_deserializer=couponmanage__pb2.CafeRegisterReply.FromString,
                 )
+        self.ReceiveAllCafes = channel.unary_unary(
+                '/couponmanage.CouponManager/ReceiveAllCafes',
+                request_serializer=couponmanage__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=couponmanage__pb2.AllCafeReply.FromString,
+                )
 
 
 class CouponManagerServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def RegisterCafe(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ReceiveAllCafes(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,6 +48,11 @@ def add_CouponManagerServicer_to_server(servicer, server):
                     servicer.RegisterCafe,
                     request_deserializer=couponmanage__pb2.CafeRegisterRequest.FromString,
                     response_serializer=couponmanage__pb2.CafeRegisterReply.SerializeToString,
+            ),
+            'ReceiveAllCafes': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReceiveAllCafes,
+                    request_deserializer=couponmanage__pb2.EmptyRequest.FromString,
+                    response_serializer=couponmanage__pb2.AllCafeReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -62,5 +78,22 @@ class CouponManager(object):
         return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/RegisterCafe',
             couponmanage__pb2.CafeRegisterRequest.SerializeToString,
             couponmanage__pb2.CafeRegisterReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ReceiveAllCafes(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/ReceiveAllCafes',
+            couponmanage__pb2.EmptyRequest.SerializeToString,
+            couponmanage__pb2.AllCafeReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -4,6 +4,7 @@ package couponmanage;
 
 service CouponManager {
   rpc RegisterCafe (CafeRegisterRequest) returns (CafeRegisterReply) {}
+  rpc ReceiveAllCafes (EmptyRequest) returns (AllCafeReply) {}
 }
 
 enum DayOfTheWeek {
@@ -29,6 +30,13 @@ message CafeRegisterRequest {
   double rating = 3;
   repeated OperatingInfo operating_info = 4;
 }
+
+message AllCafeReply {
+  repeated CafeRegisterRequest cafes = 1;
+}
+
+message EmptyRequest {}
+message EmptyReply {}
 
 message CafeRegisterReply {
   bool is_success = 1;
