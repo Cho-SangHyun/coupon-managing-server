@@ -3,9 +3,10 @@ syntax = "proto3";
 package couponmanage;
 
 service CouponManager {
-  rpc RegisterCafe (CafeDetail) returns (CafeRegisterReply) {}
+  rpc RegisterCafe (CafeDetail) returns (CafeRegisterAndUpdateReply) {}
   rpc ReceiveAllCafes (EmptyRequest) returns (AllCafeReply) {}
   rpc ReceiveCafeDetail (CafeDetailRequest) returns (CafeDetail) {}
+  rpc UpdateCafe (CafeUpdateRequest) returns (CafeRegisterAndUpdateReply) {}
 }
 
 enum DayOfTheWeek {
@@ -32,6 +33,16 @@ message CafeDetail {
   repeated OperatingInfo operating_info = 4;
 }
 
+message CafeUpdateRequest {
+  string name = 1;
+  string address = 2;
+  double rating = 3;
+  repeated OperatingInfo operating_info = 4;
+  bool is_address_null = 5;
+  bool is_rating_null = 6;
+  bool is_operating_info_null = 7;
+}
+
 message AllCafeReply {
   repeated CafeDetail cafes = 1;
 }
@@ -43,6 +54,6 @@ message CafeDetailRequest {
 message EmptyRequest {}
 message EmptyReply {}
 
-message CafeRegisterReply {
+message CafeRegisterAndUpdateReply {
   bool is_success = 1;
 }

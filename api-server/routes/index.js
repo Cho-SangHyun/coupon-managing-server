@@ -71,4 +71,34 @@ router.post('/cafes', function(req, res){
   );
  });
 
+ /* Update cafe data */
+ router.patch('/cafes/:cafeName', function(req, res){
+  const cafeName = req.params.cafeName;
+  const {address, rating, operating_info} = req.body;
+  
+  client.updateCafe(
+    {
+      name: cafeName,
+      address: address,
+      rating: rating,
+      operating_info: operating_info ? operating_info : null,
+      is_address_null: address ? false : true,
+      is_rating_null: rating ? false : true,
+      is_operating_info_null: operating_info ? false : true,
+    },
+    function(err, response) {
+      if (err == null) {
+        console.log(response);
+        if (response?.is_success == true) {
+          res.sendStatus(204);
+        } else {
+          res.sendStatus(404);
+        }
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  );
+ });
+
 module.exports = router;

@@ -43,7 +43,7 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
 
     def RegisterCafe(self, request, context):
         if self.cafe_collection.find_one({"name": request.name}) is not None:
-            return couponmanage_pb2.CafeRegisterReply(is_success=False)
+            return couponmanage_pb2.CafeRegisterAndUpdateReply(is_success=False)
 
         data = {}
         data["name"] = request.name
@@ -61,6 +61,34 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
 
         self.cafe_collection.insert_one(data)
         return couponmanage_pb2.CafeRegisterReply(is_success=True)
+
+    def UpdateCafe(self, request, context):
+        print("before")
+        print(self.cafe_collection.find_one({"name": request.name}))
+        data = {}
+        if not request.is_address_null:
+            data["address"] = request.address
+        if not request.is_rating_null:
+            data["rating"] = request.rating
+        if not request.is_operating_info_null:
+            data["operating_info"] = []
+            for item in request.operating_info:
+                operating_data = {}
+                operating_data["open_day_of_the_week"] = item.open_day_of_the_week
+                operating_data["open_hour"] = item.open_hour
+                operating_data["close_day_of_the_week"] = item.close_day_of_the_week
+                operating_data["close_hour"] = item.close_hour
+                data["operating_info"].append(operating_data)
+            data["operating_info"].sort(key=lambda x: x["open_day_of_the_week"])
+
+        self.cafe_collection.update_one(
+            {"name": request.name},
+            {"$set": data}
+        )
+
+        print("after")
+        print(self.cafe_collection.find_one({"name": request.name}))
+        return couponmanage_pb2.CafeRegisterAndUpdateReply(is_success=True)
 
 
 def serve():

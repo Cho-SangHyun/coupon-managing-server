@@ -47,6 +47,24 @@ class CafeDetail(_message.Message):
     operating_info: _containers.RepeatedCompositeFieldContainer[OperatingInfo]
     def __init__(self, name: _Optional[str] = ..., address: _Optional[str] = ..., rating: _Optional[float] = ..., operating_info: _Optional[_Iterable[_Union[OperatingInfo, _Mapping]]] = ...) -> None: ...
 
+class CafeUpdateRequest(_message.Message):
+    __slots__ = ("name", "address", "rating", "operating_info", "is_address_null", "is_rating_null", "is_operating_info_null")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    RATING_FIELD_NUMBER: _ClassVar[int]
+    OPERATING_INFO_FIELD_NUMBER: _ClassVar[int]
+    IS_ADDRESS_NULL_FIELD_NUMBER: _ClassVar[int]
+    IS_RATING_NULL_FIELD_NUMBER: _ClassVar[int]
+    IS_OPERATING_INFO_NULL_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    address: str
+    rating: float
+    operating_info: _containers.RepeatedCompositeFieldContainer[OperatingInfo]
+    is_address_null: bool
+    is_rating_null: bool
+    is_operating_info_null: bool
+    def __init__(self, name: _Optional[str] = ..., address: _Optional[str] = ..., rating: _Optional[float] = ..., operating_info: _Optional[_Iterable[_Union[OperatingInfo, _Mapping]]] = ..., is_address_null: bool = ..., is_rating_null: bool = ..., is_operating_info_null: bool = ...) -> None: ...
+
 class AllCafeReply(_message.Message):
     __slots__ = ("cafes",)
     CAFES_FIELD_NUMBER: _ClassVar[int]
@@ -67,7 +85,7 @@ class EmptyReply(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
 
-class CafeRegisterReply(_message.Message):
+class CafeRegisterAndUpdateReply(_message.Message):
     __slots__ = ("is_success",)
     IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     is_success: bool
