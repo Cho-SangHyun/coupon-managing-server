@@ -35,7 +35,7 @@ class OperatingInfo(_message.Message):
     close_hour: str
     def __init__(self, open_day_of_the_week: _Optional[_Union[DayOfTheWeek, str]] = ..., open_hour: _Optional[str] = ..., close_day_of_the_week: _Optional[_Union[DayOfTheWeek, str]] = ..., close_hour: _Optional[str] = ...) -> None: ...
 
-class CafeRegisterRequest(_message.Message):
+class CafeDetail(_message.Message):
     __slots__ = ("name", "address", "rating", "operating_info")
     NAME_FIELD_NUMBER: _ClassVar[int]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
@@ -50,8 +50,14 @@ class CafeRegisterRequest(_message.Message):
 class AllCafeReply(_message.Message):
     __slots__ = ("cafes",)
     CAFES_FIELD_NUMBER: _ClassVar[int]
-    cafes: _containers.RepeatedCompositeFieldContainer[CafeRegisterRequest]
-    def __init__(self, cafes: _Optional[_Iterable[_Union[CafeRegisterRequest, _Mapping]]] = ...) -> None: ...
+    cafes: _containers.RepeatedCompositeFieldContainer[CafeDetail]
+    def __init__(self, cafes: _Optional[_Iterable[_Union[CafeDetail, _Mapping]]] = ...) -> None: ...
+
+class CafeDetailRequest(_message.Message):
+    __slots__ = ("name",)
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
 
 class EmptyRequest(_message.Message):
     __slots__ = ()

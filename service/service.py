@@ -32,6 +32,15 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
         data = list(self.cafe_collection.find({}, {"_id":False}))
         return couponmanage_pb2.AllCafeReply(cafes=data)
 
+    def ReceiveCafeDetail(self, request, context):
+        data = self.cafe_collection.find_one({"name": request.name}, {"_id":False})
+        return couponmanage_pb2.CafeDetail(
+            name=data["name"],
+            address=data["address"],
+            rating=data["rating"],
+            operating_info=data["operating_info"]
+        ) if data else couponmanage_pb2.CafeDetail()
+
     def RegisterCafe(self, request, context):
         if self.cafe_collection.find_one({"name": request.name}) is not None:
             return couponmanage_pb2.CafeRegisterReply(is_success=False)

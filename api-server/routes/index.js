@@ -22,8 +22,23 @@ let client = new routes.CouponManager('localhost:50051', grpc.credentials.create
 router.get('/cafes', function(req, res) {
   client.receiveAllCafes({}, function(err, response) {
     if (err == null) {
-      let jsonObject = response.cafes.toObject();
       res.status(200).json(JSON.stringify(response));
+    } else {
+      res.sendStatus(500);
+    }
+  });
+});
+
+/* receive cafe data by cafe name. */
+router.get('/cafes/:cafeName', function(req, res) {
+  const cafeName = req.params.cafeName;
+  client.receiveCafeDetail({name: cafeName}, function(err, response) {
+    if (err == null) {
+      if (response.name != "") {
+        res.status(200).json(JSON.stringify(response));
+      } else {
+        res.sendStatus(404);
+      }
     } else {
       res.sendStatus(500);
     }
