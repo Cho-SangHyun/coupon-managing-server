@@ -9,6 +9,7 @@ service CouponManager {
   rpc UpdateCafe (CafeUpdateRequest) returns (CUDReply) {}
   rpc DeleteCafe (CafeName) returns (CUDReply) {}
   rpc ReceiveAllCoupons (UserId) returns (AllCouponReply) {}
+  rpc IncreaseCoupon (CouponIncreaseRequest) returns (CUDReply) {}
 }
 
 enum DayOfTheWeek {
@@ -58,13 +59,18 @@ message UserId {
 }
 
 message CouponDetail {
-  string cafe_id = 1;
-  int32 coupon_count = 2;
+  string cafe_name = 1;
+  int32 count = 2;
 }
 
 message AllCouponReply {
   bool is_success = 1;
   repeated CouponDetail coupons = 2;
+}
+
+message CouponIncreaseRequest {
+  int64 user_id = 1;
+  string cafe_name = 2;
 }
 
 message EmptyRequest {}

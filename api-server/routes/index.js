@@ -134,4 +134,28 @@ router.delete('/cafes/:cafeName', function(req, res) {
   });
 });
 
+ /* increase user`s coupon */
+ router.post('/users/:userId/coupons/:cafeName', function(req, res) {
+  const userId = req.params.userId;
+  const cafeName = req.params.cafeName;
+  
+  client.increaseCoupon(
+    {
+      user_id: userId,
+      cafe_name: cafeName,
+    },
+    function(err, response) {
+      if (err == null) {
+        if (response?.is_success) {
+          res.sendStatus(204);
+        } else {
+          res.sendStatus(404);
+        }
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  );
+});
+
 module.exports = router;
