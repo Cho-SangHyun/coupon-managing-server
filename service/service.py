@@ -35,9 +35,12 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
         #     {"$inc": {"seq": 1}}
         # )
         # user_id = self.user_id_counter.find_one({"key": "userid"})["seq"]
-        # self.user_collection.update_one(
-        #     {"name": "조상현"},
-        #     {"$set": {"user_id": user_id}}
+        # self.user_collection.insert_one(
+        #     {
+        #         "name": "유지민",
+        #         "user_id": user_id,
+        #         "coupon": []
+        #      }
         # )
 
         data = list(self.cafe_collection.find({}, {"_id":False}))
@@ -180,6 +183,23 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
                 return couponmanage_pb2.CouponUseReply(find_success=True, use_success=True)
         return couponmanage_pb2.CouponUseReply(find_success=True, use_success=False)
 
+    def ReceiveCouponRankingByCafeName(self, request, context):
+        cafe_name = request.name
+        if self.cafe_collection.find_one({"name": cafe_name}) is None:
+            return couponmanage_pb2.CouponRankingReply(is_success=False)
+        users = list(self.user_collection.find({"coupon.cafe_name": cafe_name}))
+        data = []
+        for user in users:
+            name_and_count = {"name": user["name"]}
+            for coupon_data in user["coupon"]:
+                coupon_cafe_name = coupon_data["cafe_name"]
+                coupon_count = coupon_data["count"]
+                if cafe_name == coupon_cafe_name:
+                    name_and_count["count"] = coupon_count
+                    break
+            data.append(name_and_count)
+        data.sort(key=lambda x: -x["count"])
+        return couponmanage_pb2.CouponRankingReply(is_success=True, coupon_datas=data)
 
 def serve():
     port = "50051"

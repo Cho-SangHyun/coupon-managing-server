@@ -59,6 +59,11 @@ class CouponManagerStub(object):
                 request_serializer=couponmanage__pb2.CouponRequest.SerializeToString,
                 response_deserializer=couponmanage__pb2.CouponUseReply.FromString,
                 )
+        self.ReceiveCouponRankingByCafeName = channel.unary_unary(
+                '/couponmanage.CouponManager/ReceiveCouponRankingByCafeName',
+                request_serializer=couponmanage__pb2.CafeName.SerializeToString,
+                response_deserializer=couponmanage__pb2.CouponRankingReply.FromString,
+                )
 
 
 class CouponManagerServicer(object):
@@ -118,6 +123,12 @@ class CouponManagerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ReceiveCouponRankingByCafeName(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_CouponManagerServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -165,6 +176,11 @@ def add_CouponManagerServicer_to_server(servicer, server):
                     servicer.UseCoupon,
                     request_deserializer=couponmanage__pb2.CouponRequest.FromString,
                     response_serializer=couponmanage__pb2.CouponUseReply.SerializeToString,
+            ),
+            'ReceiveCouponRankingByCafeName': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReceiveCouponRankingByCafeName,
+                    request_deserializer=couponmanage__pb2.CafeName.FromString,
+                    response_serializer=couponmanage__pb2.CouponRankingReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -326,5 +342,22 @@ class CouponManager(object):
         return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/UseCoupon',
             couponmanage__pb2.CouponRequest.SerializeToString,
             couponmanage__pb2.CouponUseReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ReceiveCouponRankingByCafeName(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/ReceiveCouponRankingByCafeName',
+            couponmanage__pb2.CafeName.SerializeToString,
+            couponmanage__pb2.CouponRankingReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

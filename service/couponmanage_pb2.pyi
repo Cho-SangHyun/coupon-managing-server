@@ -136,3 +136,19 @@ class CouponUseReply(_message.Message):
     find_success: bool
     use_success: bool
     def __init__(self, find_success: bool = ..., use_success: bool = ...) -> None: ...
+
+class CouponData(_message.Message):
+    __slots__ = ("name", "count")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    COUNT_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    count: int
+    def __init__(self, name: _Optional[str] = ..., count: _Optional[int] = ...) -> None: ...
+
+class CouponRankingReply(_message.Message):
+    __slots__ = ("is_success", "coupon_datas")
+    IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    COUPON_DATAS_FIELD_NUMBER: _ClassVar[int]
+    is_success: bool
+    coupon_datas: _containers.RepeatedCompositeFieldContainer[CouponData]
+    def __init__(self, is_success: bool = ..., coupon_datas: _Optional[_Iterable[_Union[CouponData, _Mapping]]] = ...) -> None: ...

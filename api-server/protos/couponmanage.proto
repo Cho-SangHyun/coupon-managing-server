@@ -12,6 +12,7 @@ service CouponManager {
   rpc ReceiveCouponDetail (CouponRequest) returns (CouponDetailReply) {}
   rpc IncreaseCoupon (CouponRequest) returns (CUDReply) {}
   rpc UseCoupon (CouponRequest) returns (CouponUseReply) {}
+  rpc ReceiveCouponRankingByCafeName (CafeName) returns (CouponRankingReply) {}
 }
 
 enum DayOfTheWeek {
@@ -90,4 +91,14 @@ message CUDReply {
 message CouponUseReply {
   bool find_success = 1;
   bool use_success = 2;
+}
+
+message CouponData {
+  string name = 1;
+  int32 count = 2;
+}
+
+message CouponRankingReply {
+  bool is_success = 1;
+  repeated CouponData coupon_datas = 2;
 }

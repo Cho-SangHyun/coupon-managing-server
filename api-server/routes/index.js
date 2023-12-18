@@ -210,4 +210,26 @@ router.patch('/users/:userId/coupons/:cafeName', function(req, res) {
   );
 });
 
+/* receive user`s ranking by cafe name */
+router.get('/users/ranking/:cafeName', function(req, res) {
+  const cafeName = req.params.cafeName;
+  
+  client.receiveCouponRankingByCafeName(
+    {
+      name: cafeName,
+    },
+    function(err, response) {
+      if (err == null) {
+        if (response?.is_success) {
+          res.status(200).json(JSON.stringify(response));
+        } else {
+          res.sendStatus(404);
+        }
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  );
+});
+
 module.exports = router;
