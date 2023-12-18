@@ -134,6 +134,30 @@ router.delete('/cafes/:cafeName', function(req, res) {
   });
 });
 
+/* receive user`s specific coupon */
+router.get('/users/:userId/coupons/:cafeName', function(req, res) {
+  const userId = req.params.userId;
+  const cafeName = req.params.cafeName;
+  
+  client.receiveCouponDetail(
+    {
+      user_id: userId,
+      cafe_name: cafeName,
+    },
+    function(err, response) {
+      if (err == null) {
+        if (response?.is_success) {
+          res.status(200).json(JSON.stringify(response));
+        } else {
+          res.sendStatus(404);
+        }
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  );
+});
+
  /* increase user`s coupon */
  router.post('/users/:userId/coupons/:cafeName', function(req, res) {
   const userId = req.params.userId;

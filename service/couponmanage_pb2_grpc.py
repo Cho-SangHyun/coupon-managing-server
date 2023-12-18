@@ -44,9 +44,14 @@ class CouponManagerStub(object):
                 request_serializer=couponmanage__pb2.UserId.SerializeToString,
                 response_deserializer=couponmanage__pb2.AllCouponReply.FromString,
                 )
+        self.ReceiveCouponDetail = channel.unary_unary(
+                '/couponmanage.CouponManager/ReceiveCouponDetail',
+                request_serializer=couponmanage__pb2.CouponRequest.SerializeToString,
+                response_deserializer=couponmanage__pb2.CouponDetailReply.FromString,
+                )
         self.IncreaseCoupon = channel.unary_unary(
                 '/couponmanage.CouponManager/IncreaseCoupon',
-                request_serializer=couponmanage__pb2.CouponIncreaseRequest.SerializeToString,
+                request_serializer=couponmanage__pb2.CouponRequest.SerializeToString,
                 response_deserializer=couponmanage__pb2.CUDReply.FromString,
                 )
 
@@ -85,6 +90,12 @@ class CouponManagerServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def ReceiveAllCoupons(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ReceiveCouponDetail(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -129,9 +140,14 @@ def add_CouponManagerServicer_to_server(servicer, server):
                     request_deserializer=couponmanage__pb2.UserId.FromString,
                     response_serializer=couponmanage__pb2.AllCouponReply.SerializeToString,
             ),
+            'ReceiveCouponDetail': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReceiveCouponDetail,
+                    request_deserializer=couponmanage__pb2.CouponRequest.FromString,
+                    response_serializer=couponmanage__pb2.CouponDetailReply.SerializeToString,
+            ),
             'IncreaseCoupon': grpc.unary_unary_rpc_method_handler(
                     servicer.IncreaseCoupon,
-                    request_deserializer=couponmanage__pb2.CouponIncreaseRequest.FromString,
+                    request_deserializer=couponmanage__pb2.CouponRequest.FromString,
                     response_serializer=couponmanage__pb2.CUDReply.SerializeToString,
             ),
     }
@@ -247,6 +263,23 @@ class CouponManager(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def ReceiveCouponDetail(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/ReceiveCouponDetail',
+            couponmanage__pb2.CouponRequest.SerializeToString,
+            couponmanage__pb2.CouponDetailReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def IncreaseCoupon(request,
             target,
             options=(),
@@ -258,7 +291,7 @@ class CouponManager(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/couponmanage.CouponManager/IncreaseCoupon',
-            couponmanage__pb2.CouponIncreaseRequest.SerializeToString,
+            couponmanage__pb2.CouponRequest.SerializeToString,
             couponmanage__pb2.CUDReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

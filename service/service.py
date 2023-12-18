@@ -114,6 +114,22 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
             return couponmanage_pb2.AllCouponReply(is_success=False)
         return couponmanage_pb2.AllCouponReply(is_success=True, coupons=user["coupon"])
 
+    def ReceiveCouponDetail(self, request, context):
+        user_id = request.user_id
+        cafe_name = request.cafe_name
+        user = self.user_collection.find_one({"user_id": user_id}, {"_id": False})
+        cafe = self.cafe_collection.find_one({"name": cafe_name}, {"_id": False})
+
+        if user is None or cafe is None:
+            return couponmanage_pb2.CouponDetailReply(is_success=False)
+
+        for coupon_data in user["coupon"]:
+            if coupon_data["cafe_name"] == cafe_name:
+                print
+                return couponmanage_pb2.CouponDetailReply(
+                    is_success=True, coupon_detail=coupon_data)
+        return couponmanage_pb2.CouponDetailReply(is_success=True)
+
     def IncreaseCoupon(self, request, context):
         user_id = request.user_id
         cafe_name = request.cafe_name

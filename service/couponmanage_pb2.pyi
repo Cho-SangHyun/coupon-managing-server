@@ -91,6 +91,14 @@ class CouponDetail(_message.Message):
     count: int
     def __init__(self, cafe_name: _Optional[str] = ..., count: _Optional[int] = ...) -> None: ...
 
+class CouponDetailReply(_message.Message):
+    __slots__ = ("is_success", "coupon_detail")
+    IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    COUPON_DETAIL_FIELD_NUMBER: _ClassVar[int]
+    is_success: bool
+    coupon_detail: CouponDetail
+    def __init__(self, is_success: bool = ..., coupon_detail: _Optional[_Union[CouponDetail, _Mapping]] = ...) -> None: ...
+
 class AllCouponReply(_message.Message):
     __slots__ = ("is_success", "coupons")
     IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
@@ -99,7 +107,7 @@ class AllCouponReply(_message.Message):
     coupons: _containers.RepeatedCompositeFieldContainer[CouponDetail]
     def __init__(self, is_success: bool = ..., coupons: _Optional[_Iterable[_Union[CouponDetail, _Mapping]]] = ...) -> None: ...
 
-class CouponIncreaseRequest(_message.Message):
+class CouponRequest(_message.Message):
     __slots__ = ("user_id", "cafe_name")
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     CAFE_NAME_FIELD_NUMBER: _ClassVar[int]
