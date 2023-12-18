@@ -128,3 +128,11 @@ class CUDReply(_message.Message):
     IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     is_success: bool
     def __init__(self, is_success: bool = ...) -> None: ...
+
+class CouponUseReply(_message.Message):
+    __slots__ = ("find_success", "use_success")
+    FIND_SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    USE_SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    find_success: bool
+    use_success: bool
+    def __init__(self, find_success: bool = ..., use_success: bool = ...) -> None: ...

@@ -182,4 +182,32 @@ router.get('/users/:userId/coupons/:cafeName', function(req, res) {
   );
 });
 
+/* use user`s coupon */
+router.patch('/users/:userId/coupons/:cafeName', function(req, res) {
+  const userId = req.params.userId;
+  const cafeName = req.params.cafeName;
+  
+  client.useCoupon(
+    {
+      user_id: userId,
+      cafe_name: cafeName,
+    },
+    function(err, response) {
+      if (err == null) {
+        if (response?.find_success) {
+          if (response?.use_success) {
+            res.sendStatus(204);
+          } else {
+            res.sendStatus(400);
+          }
+        } else {
+          res.sendStatus(404);
+        }
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  );
+});
+
 module.exports = router;

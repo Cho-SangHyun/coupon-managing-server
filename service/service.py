@@ -148,7 +148,7 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
                     },
                     {"$inc": {"coupon.$.count": 1}}
                 )
-            break
+                break
         else:
             self.user_collection.update_one(
                 {"user_id": user_id},
@@ -158,6 +158,27 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
                 }}}
             )
         return couponmanage_pb2.CUDReply(is_success=True)
+
+    def UseCoupon(self, request, context):
+        user_id = request.user_id
+        cafe_name = request.cafe_name
+        user = self.user_collection.find_one({"user_id": user_id}, {"_id": False})
+        cafe = self.cafe_collection.find_one({"name": cafe_name}, {"_id": False})
+
+        if user is None or cafe is None:
+            return couponmanage_pb2.CouponUseReply(find_success=False)
+
+        for coupon_data in user["coupon"]:
+            if coupon_data["cafe_name"] == cafe_name and coupon_data["count"] >= 10:
+                self.user_collection.update_one(
+                    {
+                        "user_id": user_id,
+                        "coupon.cafe_name": cafe_name
+                    },
+                    {"$inc": {"coupon.$.count": -10}}
+                )
+                return couponmanage_pb2.CouponUseReply(find_success=True, use_success=True)
+        return couponmanage_pb2.CouponUseReply(find_success=True, use_success=False)
 
 
 def serve():

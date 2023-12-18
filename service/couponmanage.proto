@@ -11,6 +11,7 @@ service CouponManager {
   rpc ReceiveAllCoupons (UserId) returns (AllCouponReply) {}
   rpc ReceiveCouponDetail (CouponRequest) returns (CouponDetailReply) {}
   rpc IncreaseCoupon (CouponRequest) returns (CUDReply) {}
+  rpc UseCoupon (CouponRequest) returns (CouponUseReply) {}
 }
 
 enum DayOfTheWeek {
@@ -84,4 +85,9 @@ message EmptyReply {}
 
 message CUDReply {
   bool is_success = 1;
+}
+
+message CouponUseReply {
+  bool find_success = 1;
+  bool use_success = 2;
 }
