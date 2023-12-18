@@ -26,9 +26,20 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
         conn = MongoClient(host="127.0.0.1", port=27017)
         db = conn.coupon_manager
         self.cafe_collection = db.cafe_collection
-        self.coupon_collection = db.coupon_collection
+        self.user_collection = db.user_collection
+        self.user_id_counter = db.counters
 
     def ReceiveAllCafes(self, request, context):
+        # self.user_id_counter.update_one(
+        #     {"key": "userid"},
+        #     {"$inc": {"seq": 1}}
+        # )
+        # user_id = self.user_id_counter.find_one({"key": "userid"})["seq"]
+        # self.user_collection.update_one(
+        #     {"name": "조상현"},
+        #     {"$set": {"user_id": user_id}}
+        # )
+
         data = list(self.cafe_collection.find({}, {"_id":False}))
         return couponmanage_pb2.AllCafeReply(cafes=data)
 
@@ -43,7 +54,7 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
 
     def RegisterCafe(self, request, context):
         if self.cafe_collection.find_one({"name": request.name}) is not None:
-            return couponmanage_pb2.CafeCUDReply(is_success=False)
+            return couponmanage_pb2.CUDReply(is_success=False)
 
         data = {}
         data["name"] = request.name
@@ -60,11 +71,11 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
         data["operating_info"].sort(key=lambda x: x["open_day_of_the_week"])
 
         self.cafe_collection.insert_one(data)
-        return couponmanage_pb2.CafeCUDReply(is_success=True)
+        return couponmanage_pb2.CUDReply(is_success=True)
 
     def UpdateCafe(self, request, context):
         if self.cafe_collection.find_one({"name": request.name}) is None:
-            return couponmanage_pb2.CafeCUDReply(is_success=False)
+            return couponmanage_pb2.CUDReply(is_success=False)
 
         data = {}
         if not request.is_address_null:
@@ -87,14 +98,21 @@ class CouponManager(couponmanage_pb2_grpc.CouponManagerServicer):
             {"$set": data}
         )
 
-        return couponmanage_pb2.CafeCUDReply(is_success=True)
+        return couponmanage_pb2.CUDReply(is_success=True)
 
     def DeleteCafe(self, request, context):
         if self.cafe_collection.find_one({"name": request.name}) is None:
-            return couponmanage_pb2.CafeCUDReply(is_success=False)
+            return couponmanage_pb2.CUDReply(is_success=False)
 
         self.cafe_collection.delete_one({"name": request.name})
-        return couponmanage_pb2.CafeCUDReply(is_success=True)
+        return couponmanage_pb2.CUDReply(is_success=True)
+
+    def ReceiveAllCoupons(self, request, context):
+        user_id = request.user_id
+        user = self.user_collection.find_one({"user_id": user_id}, {"_id":False})
+        if user is None:
+            return couponmanage_pb2.AllCouponReply(is_success=False)
+        return couponmanage_pb2.AllCouponReply(is_success=True)
 
 
 def serve():

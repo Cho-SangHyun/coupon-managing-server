@@ -117,4 +117,21 @@ router.delete('/cafes/:cafeName', function(req, res) {
   });
 });
 
+ /* receive specific user`s all coupons */
+ router.get('/users/:userId/coupons', function(req, res) {
+  const userId = req.params.userId;
+  client.receiveAllCoupons({user_id: userId}, function(err, response) {
+    if (err == null) {
+      if (response?.is_success) {
+        res.status(200).json(JSON.stringify(response));
+      } else {
+        console.log(response)
+        res.sendStatus(404);
+      }
+    } else {
+      res.sendStatus(500);
+    }
+  });
+});
+
 module.exports = router;

@@ -77,6 +77,28 @@ class CafeName(_message.Message):
     name: str
     def __init__(self, name: _Optional[str] = ...) -> None: ...
 
+class UserId(_message.Message):
+    __slots__ = ("user_id",)
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    user_id: int
+    def __init__(self, user_id: _Optional[int] = ...) -> None: ...
+
+class CouponDetail(_message.Message):
+    __slots__ = ("cafe_id", "coupon_count")
+    CAFE_ID_FIELD_NUMBER: _ClassVar[int]
+    COUPON_COUNT_FIELD_NUMBER: _ClassVar[int]
+    cafe_id: str
+    coupon_count: int
+    def __init__(self, cafe_id: _Optional[str] = ..., coupon_count: _Optional[int] = ...) -> None: ...
+
+class AllCouponReply(_message.Message):
+    __slots__ = ("is_success", "coupons")
+    IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    COUPONS_FIELD_NUMBER: _ClassVar[int]
+    is_success: bool
+    coupons: _containers.RepeatedCompositeFieldContainer[CouponDetail]
+    def __init__(self, is_success: bool = ..., coupons: _Optional[_Iterable[_Union[CouponDetail, _Mapping]]] = ...) -> None: ...
+
 class EmptyRequest(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
@@ -85,7 +107,7 @@ class EmptyReply(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
 
-class CafeCUDReply(_message.Message):
+class CUDReply(_message.Message):
     __slots__ = ("is_success",)
     IS_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     is_success: bool

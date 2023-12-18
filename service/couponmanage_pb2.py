@@ -14,15 +14,15 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12\x63ouponmanage.proto\x12\x0c\x63ouponmanage\"\xab\x01\n\rOperatingInfo\x12\x38\n\x14open_day_of_the_week\x18\x01 \x01(\x0e\x32\x1a.couponmanage.DayOfTheWeek\x12\x11\n\topen_hour\x18\x02 \x01(\t\x12\x39\n\x15\x63lose_day_of_the_week\x18\x03 \x01(\x0e\x32\x1a.couponmanage.DayOfTheWeek\x12\x12\n\nclose_hour\x18\x04 \x01(\t\"p\n\nCafeDetail\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06rating\x18\x03 \x01(\x01\x12\x33\n\x0eoperating_info\x18\x04 \x03(\x0b\x32\x1b.couponmanage.OperatingInfo\"\xc8\x01\n\x11\x43\x61\x66\x65UpdateRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06rating\x18\x03 \x01(\x01\x12\x33\n\x0eoperating_info\x18\x04 \x03(\x0b\x32\x1b.couponmanage.OperatingInfo\x12\x17\n\x0fis_address_null\x18\x05 \x01(\x08\x12\x16\n\x0eis_rating_null\x18\x06 \x01(\x08\x12\x1e\n\x16is_operating_info_null\x18\x07 \x01(\x08\"7\n\x0c\x41llCafeReply\x12\'\n\x05\x63\x61\x66\x65s\x18\x01 \x03(\x0b\x32\x18.couponmanage.CafeDetail\"\x18\n\x08\x43\x61\x66\x65Name\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x0e\n\x0c\x45mptyRequest\"\x0c\n\nEmptyReply\"\"\n\x0c\x43\x61\x66\x65\x43UDReply\x12\x12\n\nis_success\x18\x01 \x01(\x08*M\n\x0c\x44\x61yOfTheWeek\x12\x07\n\x03SUN\x10\x00\x12\x07\n\x03MON\x10\x01\x12\x07\n\x03TUE\x10\x02\x12\x07\n\x03WED\x10\x03\x12\x07\n\x03THU\x10\x04\x12\x07\n\x03\x46RI\x10\x05\x12\x07\n\x03SAT\x10\x06\x32\xfe\x02\n\rCouponManager\x12\x46\n\x0cRegisterCafe\x12\x18.couponmanage.CafeDetail\x1a\x1a.couponmanage.CafeCUDReply\"\x00\x12K\n\x0fReceiveAllCafes\x12\x1a.couponmanage.EmptyRequest\x1a\x1a.couponmanage.AllCafeReply\"\x00\x12G\n\x11ReceiveCafeDetail\x12\x16.couponmanage.CafeName\x1a\x18.couponmanage.CafeDetail\"\x00\x12K\n\nUpdateCafe\x12\x1f.couponmanage.CafeUpdateRequest\x1a\x1a.couponmanage.CafeCUDReply\"\x00\x12\x42\n\nDeleteCafe\x12\x16.couponmanage.CafeName\x1a\x1a.couponmanage.CafeCUDReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12\x63ouponmanage.proto\x12\x0c\x63ouponmanage\"\xab\x01\n\rOperatingInfo\x12\x38\n\x14open_day_of_the_week\x18\x01 \x01(\x0e\x32\x1a.couponmanage.DayOfTheWeek\x12\x11\n\topen_hour\x18\x02 \x01(\t\x12\x39\n\x15\x63lose_day_of_the_week\x18\x03 \x01(\x0e\x32\x1a.couponmanage.DayOfTheWeek\x12\x12\n\nclose_hour\x18\x04 \x01(\t\"p\n\nCafeDetail\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06rating\x18\x03 \x01(\x01\x12\x33\n\x0eoperating_info\x18\x04 \x03(\x0b\x32\x1b.couponmanage.OperatingInfo\"\xc8\x01\n\x11\x43\x61\x66\x65UpdateRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06rating\x18\x03 \x01(\x01\x12\x33\n\x0eoperating_info\x18\x04 \x03(\x0b\x32\x1b.couponmanage.OperatingInfo\x12\x17\n\x0fis_address_null\x18\x05 \x01(\x08\x12\x16\n\x0eis_rating_null\x18\x06 \x01(\x08\x12\x1e\n\x16is_operating_info_null\x18\x07 \x01(\x08\"7\n\x0c\x41llCafeReply\x12\'\n\x05\x63\x61\x66\x65s\x18\x01 \x03(\x0b\x32\x18.couponmanage.CafeDetail\"\x18\n\x08\x43\x61\x66\x65Name\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x19\n\x06UserId\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\"5\n\x0c\x43ouponDetail\x12\x0f\n\x07\x63\x61\x66\x65_id\x18\x01 \x01(\t\x12\x14\n\x0c\x63oupon_count\x18\x02 \x01(\x05\"Q\n\x0e\x41llCouponReply\x12\x12\n\nis_success\x18\x01 \x01(\x08\x12+\n\x07\x63oupons\x18\x02 \x03(\x0b\x32\x1a.couponmanage.CouponDetail\"\x0e\n\x0c\x45mptyRequest\"\x0c\n\nEmptyReply\"\x1e\n\x08\x43UDReply\x12\x12\n\nis_success\x18\x01 \x01(\x08*M\n\x0c\x44\x61yOfTheWeek\x12\x07\n\x03SUN\x10\x00\x12\x07\n\x03MON\x10\x01\x12\x07\n\x03TUE\x10\x02\x12\x07\n\x03WED\x10\x03\x12\x07\n\x03THU\x10\x04\x12\x07\n\x03\x46RI\x10\x05\x12\x07\n\x03SAT\x10\x06\x32\xbd\x03\n\rCouponManager\x12\x42\n\x0cRegisterCafe\x12\x18.couponmanage.CafeDetail\x1a\x16.couponmanage.CUDReply\"\x00\x12K\n\x0fReceiveAllCafes\x12\x1a.couponmanage.EmptyRequest\x1a\x1a.couponmanage.AllCafeReply\"\x00\x12G\n\x11ReceiveCafeDetail\x12\x16.couponmanage.CafeName\x1a\x18.couponmanage.CafeDetail\"\x00\x12G\n\nUpdateCafe\x12\x1f.couponmanage.CafeUpdateRequest\x1a\x16.couponmanage.CUDReply\"\x00\x12>\n\nDeleteCafe\x12\x16.couponmanage.CafeName\x1a\x16.couponmanage.CUDReply\"\x00\x12I\n\x11ReceiveAllCoupons\x12\x14.couponmanage.UserId\x1a\x1c.couponmanage.AllCouponReply\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'couponmanage_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _globals['_DAYOFTHEWEEK']._serialized_start=676
-  _globals['_DAYOFTHEWEEK']._serialized_end=753
+  _globals['_DAYOFTHEWEEK']._serialized_start=837
+  _globals['_DAYOFTHEWEEK']._serialized_end=914
   _globals['_OPERATINGINFO']._serialized_start=37
   _globals['_OPERATINGINFO']._serialized_end=208
   _globals['_CAFEDETAIL']._serialized_start=210
@@ -33,12 +33,18 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_ALLCAFEREPLY']._serialized_end=582
   _globals['_CAFENAME']._serialized_start=584
   _globals['_CAFENAME']._serialized_end=608
-  _globals['_EMPTYREQUEST']._serialized_start=610
-  _globals['_EMPTYREQUEST']._serialized_end=624
-  _globals['_EMPTYREPLY']._serialized_start=626
-  _globals['_EMPTYREPLY']._serialized_end=638
-  _globals['_CAFECUDREPLY']._serialized_start=640
-  _globals['_CAFECUDREPLY']._serialized_end=674
-  _globals['_COUPONMANAGER']._serialized_start=756
-  _globals['_COUPONMANAGER']._serialized_end=1138
+  _globals['_USERID']._serialized_start=610
+  _globals['_USERID']._serialized_end=635
+  _globals['_COUPONDETAIL']._serialized_start=637
+  _globals['_COUPONDETAIL']._serialized_end=690
+  _globals['_ALLCOUPONREPLY']._serialized_start=692
+  _globals['_ALLCOUPONREPLY']._serialized_end=773
+  _globals['_EMPTYREQUEST']._serialized_start=775
+  _globals['_EMPTYREQUEST']._serialized_end=789
+  _globals['_EMPTYREPLY']._serialized_start=791
+  _globals['_EMPTYREPLY']._serialized_end=803
+  _globals['_CUDREPLY']._serialized_start=805
+  _globals['_CUDREPLY']._serialized_end=835
+  _globals['_COUPONMANAGER']._serialized_start=917
+  _globals['_COUPONMANAGER']._serialized_end=1362
 # @@protoc_insertion_point(module_scope)
