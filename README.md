@@ -1,78 +1,78 @@
-# 카페별 쿠폰 관리 백엔드 시스템
+# Backend System for Cafe Coupon Management
 
 ## About the Project
 
-- 대부분의 카페는 쿠폰을 발급하며, 쿠폰(또는 도장)을 10장 모으면 아메리카노를 무료로 주는 서비스 등을 시행 중이다.
-- 그러나 이 쿠폰들은 분실의 위험이 있으며, 종이쓰레기를 유발한다는 단점이 있다.
-- 모바일 앱 형태의 쿠폰보관 서비스를 만들어서, 카페에서 커피 결제 시 자동으로 해당 앱에 카페별로 전자쿠폰이 누적되게끔 한다
-- 이후 해당 전자쿠폰을 사용하여 아메리카노 1잔 등의 혜택을 받게 함으로써 쿠폰 분실의 위험을 없애고, 종이쓰레기가 유발되는 것을 막는다.
+- Most cafes issue coupons and provide free americanos for collecting 10 coupons (or stamps).
+- However, these coupons are at risk of loss and have the disadvantage of causing paper waste.
+- This coupon storage service in the form of a mobile app is created so that electronic coupons are automatically accumulated for each cafe when paying for coffee at a cafe.
+- After that, the electronic coupon is used to receive benefits such as a cup of americano, thereby eliminating the risk of coupon loss and preventing paper waste from being caused.
 <br />
 
-## Build with
+## Built with
 
-- Java, Python
-- Redis, MongoDB
+- JavaScript(Express Framework), Python
+- MongoDB
 - RESTful API, gRPC
 <br />
 
 ## **Architecture**
-<img width="1591" alt="Untitled" src="https://github.com/Cho-SangHyun/coupon-managing-server/assets/65762283/1d1dfc8f-7c23-44e9-9d41-a3fff8267f06">
+![image](https://github.com/Cho-SangHyun/coupon-managing-server/assets/65762283/27b90498-5325-4af5-966e-3d29994d6031)
+- Client Side uses RESTful API to send requests to API servers build with Express Framework.
+- The API Server sends a request to the service written in Python using the gRPC.
+- Python Service works with MongoDB to perform the tasks requested by API Server, and then returns the results to the API Server.
+- API Server creates the appropriate response code and response values based on the results returned by Python Service.
 
 <br />  
 
 
 ## API List
 
-1. 내 쿠폰 조회
+1. Look up coupons for a particular user
 
-`GET` /coupons/{member_id}  
+`GET` /users/{userId}/coupons  
 <br />  
 
-2. 내 쿠폰 중 특정 카페에 대한 쿠폰 조회
+2. Look up coupons for a particular cafe among my coupons
 
-`GET` /coupons/{member_id}/{cafe_id}  
+`GET` /users/{userId}/coupons/{cafeName}  
 <br />  
 
-3. 새 쿠폰 추가
+  
+3. Add coupons for a particular user's particular cafe
 
-`POST` /coupons/{member_id}/{cafe_id}    
+`POST` /users/{userId}/coupons/{cafeName}    
 <br />  
 
-4. 쿠폰 사용
+4. Use Coupons
 
-`DELETE` /coupons/{member_id}/{cafe_id}  
+`PATCH` /users/{userId}/coupons/{cafeName}  
 <br />  
 
-5. 쿠폰 랭커 TOP 10 조회
+5. Look up coupon ranking by cafe
 
-`GET` /coupons/ranking  
+`GET` /users/ranking/{cafeName}  
 <br />  
 
-6. 카페 목록 조회
+6. Look up cafe list
 
 `GET` /cafes  
 <br />  
 
-7. 카페 정보 상세 조회
+7. Look up detailed cafe information
 
-`GET` /cafes/{cafe_id}  
+`GET` /cafes/{cafeName}  
 <br />  
 
-8. 신규 카페 등록
+8. Register new cafe
 
 `POST` /cafes  
 <br />  
 
-9. 카페 정보 수정
+9. Modify cafe information
 
-`PATCH` /cafes/{cate_id}  
+`PATCH` /cafes/{cafeName}  
 <br />  
 
-10. 카페 정보 삭제
+10. Delete cafe information
 
-`DELETE` /cafes/{cate_id}  
-<br />  
-
-11. 카페 이용자 순 TOP 10 조회
-
-`GET` /cafes/ranking  
+`DELETE` /cafes/{cafeName}  
